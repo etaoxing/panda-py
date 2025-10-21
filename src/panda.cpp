@@ -74,8 +74,8 @@ void Panda::_log(const std::string level, Args &&...args) {
 }
 
 Panda::Panda(std::string hostname, std::string name,
-             franka::RealtimeConfig realtime_config)
-    : name_(name) {
+             franka::RealtimeConfig realtime_config, double cutoff_frequency)
+    : name_(name), cutoff_frequency_(cutoff_frequency) {
   py::object logging = py::module_::import("logging");
   logger_ = logging.attr("getLogger")(name);
   py::gil_scoped_release release;
@@ -275,7 +275,7 @@ void Panda::recover() {
 
 void Panda::_runController(TorqueCallback &control_callback) {
   try {
-    robot_->control(control_callback);
+    robot_->control(control_callback, true, cutoff_frequency_);
   } catch (const franka::Exception &e) {
     _log("error", "Control loop interruped: %s", e.what());
     last_error_ = std::make_shared<franka::Exception>(e);

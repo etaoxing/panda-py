@@ -45,7 +45,8 @@ class Panda {
   static const Vector7d kDefaultTeachingDamping;
   Panda(
       std::string hostname, std::string name = "panda",
-      franka::RealtimeConfig realtime_config = franka::RealtimeConfig::kIgnore);
+      franka::RealtimeConfig realtime_config = franka::RealtimeConfig::kIgnore,
+      double cutoff_frequency = 100.0);
   ~Panda();
   const PandaContext createContext(double frequency, double max_runtime = 0.0,
                                    uint64_t max_iter = 0);
@@ -123,6 +124,7 @@ class Panda {
   void teaching_mode(bool active, const Vector7d &damping = kDefaultTeachingDamping);
 
   const std::string name_;
+  const double cutoff_frequency_;
 
  private:
   void _startController(std::shared_ptr<TorqueController> controller);

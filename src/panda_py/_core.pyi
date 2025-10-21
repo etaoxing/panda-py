@@ -114,7 +114,7 @@ class Panda:
          The main interface of panda-py to control the robot.
       
     """
-    def __init__(self, hostname: str, name: str = 'panda', realtime_config: panda_py.libfranka.RealtimeConfig = panda_py.libfranka.RealtimeConfig.kIgnore) -> None:
+    def __init__(self, hostname: str, name: str = 'panda', realtime_config: panda_py.libfranka.RealtimeConfig = panda_py.libfranka.RealtimeConfig.kIgnore, cutoff_frequency: float = 100.0) -> None:
         ...
     def create_context(self, frequency: float, max_runtime: float = 0.0, max_iter: int = 0) -> PandaContext:
         ...
@@ -210,6 +210,9 @@ class Panda:
         ...
     @property
     def name(self) -> str:
+        ...
+    @property
+    def cutoff_frequency(self) -> float:
         ...
     @property
     def q(self) -> numpy.ndarray[tuple[typing.Literal[7], typing.Literal[1]], numpy.dtype[numpy.float64]]:

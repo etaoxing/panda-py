@@ -118,11 +118,13 @@ PYBIND11_MODULE(_core, m) {
   py::class_<Panda>(m, "Panda", R"delim(
      The main interface of panda-py to control the robot.
   )delim")
-      .def(py::init<std::string, std::string, franka::RealtimeConfig>(),
+      .def(py::init<std::string, std::string, franka::RealtimeConfig, double>(),
            /*py::keep_alive<1, 0>(), py::call_guard<py::gil_scoped_release>(),*/
            py::arg("hostname"), py::arg("name") = "panda",
-           py::arg("realtime_config") = franka::RealtimeConfig::kIgnore)
+           py::arg("realtime_config") = franka::RealtimeConfig::kIgnore,
+           py::arg("cutoff_frequency") = 100.0)
       .def_readonly("name", &Panda::name_)
+      .def_readonly("cutoff_frequency", &Panda::cutoff_frequency_)
       .def_property_readonly("q", &Panda::getJointPositions)
       .def("teaching_mode", &Panda::teaching_mode, py::arg("active"),
            py::arg("damping") = Panda::kDefaultTeachingDamping,
