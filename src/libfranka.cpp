@@ -182,7 +182,8 @@ PYBIND11_MODULE(libfranka, m) {
       .value("kEndEffector", franka::Frame::kEndEffector)
       .value("kStiffness", franka::Frame::kStiffness);
 
-  py::class_<franka::Model>(m, "Model")
+  // py::class_<franka::Model>(m, "Model")
+  py::class_<franka::Model, std::shared_ptr<franka::Model>>(m, "Model")
       .def("pose",
            py::overload_cast<franka::Frame, const franka::RobotState &>(
                &franka::Model::pose, py::const_),
@@ -249,17 +250,17 @@ PYBIND11_MODULE(libfranka, m) {
                &franka::Model::gravity, py::const_),
            py::arg("robot_state"), py::arg("gravity_earth") = gravity_earth);
 
-  #if LIBFRANKA_VER >= 0x000e00
-  py::class_<franka::RobotModel>(m, "RobotModel")
-      .def(py::init<const std::string &>(),
-           py::arg("urdf"))
-      .def("coriolis", &franka::RobotModel::coriolis,
-        py::arg("q"), py::arg("dq"), py::arg("i_total"), py::arg("m_total"), py::arg("f_x_ctotal"), py::arg("c_ne"))
-      .def("gravity", &franka::RobotModel::gravity,
-        py::arg("q"), py::arg("g_earth"), py::arg("m_total"), py::arg("f_x_ctotal"), py::arg("g_ne"))
-      .def("mass", &franka::RobotModel::mass,
-        py::arg("q"), py::arg("i_total"), py::arg("m_total"), py::arg("f_x_ctotal"), py::arg("m_ne"));
-  #endif
+//   #if LIBFRANKA_VER >= 0x000e00
+//   py::class_<franka::RobotModel>(m, "RobotModel")
+//       .def(py::init<const std::string &>(),
+//            py::arg("urdf"))
+//       .def("coriolis", &franka::RobotModel::coriolis,
+//         py::arg("q"), py::arg("dq"), py::arg("i_total"), py::arg("m_total"), py::arg("f_x_ctotal"), py::arg("c_ne"))
+//       .def("gravity", &franka::RobotModel::gravity,
+//         py::arg("q"), py::arg("g_earth"), py::arg("m_total"), py::arg("f_x_ctotal"), py::arg("g_ne"))
+//       .def("mass", &franka::RobotModel::mass,
+//         py::arg("q"), py::arg("i_total"), py::arg("m_total"), py::arg("f_x_ctotal"), py::arg("m_ne"));
+//   #endif
 
   py::enum_<franka::RealtimeConfig>(m, "RealtimeConfig")
       .value("kEnforce", franka::RealtimeConfig::kEnforce)
@@ -324,7 +325,10 @@ PYBIND11_MODULE(libfranka, m) {
       .def("read", &franka::Robot::read)
       .def("read_once", &franka::Robot::readOnce)
       #if LIBFRANKA_VER >= 0x000e00
-      .def("load_model", py::overload_cast<>(&franka::Robot::loadModel))
+      // .def("load_model", py::overload_cast<>(&franka::Robot::loadModel))
+      .def("load_model", [](franka::Robot& self) {
+        return std::make_shared<franka::Model>(self.loadModel());
+      })
       #else
       .def("load_model", &franka::Robot::loadModel)
       #endif
