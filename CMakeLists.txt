@@ -6,15 +6,21 @@ project(
 
 set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE "Release")
-set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 if(NOT DEFINED LIBFRANKA_VER)
     message(FATAL_ERROR "LIBFRANKA_VER must be set! (e.g., -DLIBFRANKA_VER=0x000f00)")
 endif()
 add_compile_definitions(LIBFRANKA_VER=${LIBFRANKA_VER})
 
+find_package(console_bridge REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(Poco REQUIRED COMPONENTS Net Foundation)
+find_package(pinocchio REQUIRED)
+find_package(TinyXML2 REQUIRED)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+
 find_package(Franka REQUIRED)
 find_package(
   Python

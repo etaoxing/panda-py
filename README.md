@@ -30,18 +30,20 @@ This will install panda-py and all its requirements. The pip version ships with 
 
 ## libfranka Version
 
-There are currently two robot models available from Franka Robotics: the Franka Emika Robot (FER, formerly known as Panda) and the Franka Research 3 (FR3). Depending on the installed firmware, the FER supports libfranka version <0.10 while the FR3 requires version >=0.10. For details, refer to [this](https://frankaemika.github.io/docs/compatibility.html) compatibility matrix. If you need a libfranka version different from the default 0.9.2, download the respective zip archive from the table below. Extract the archive and install the wheel for your Python version with pip, e.g., run
+There are currently two robot models available from Franka Robotics: the Franka Emika Robot (FER, formerly known as Panda) and the Franka Research 3 (FR3). Depending on the installed firmware, the FER supports libfranka version <0.10 while the FR3 requires version >=0.10. For details, refer to [this](https://frankarobotics.github.io/docs/compatibility.html) compatibility matrix. If you need a libfranka version different from the default 0.9.2, download the respective zip archive from the table below. Extract the archive and install the wheel for your Python version with pip, e.g., run
 ```
 # ensure the corresponding libfranka version is installed first
 # sudo dpkg -i libfranka*.deb
-./bin/build.sh 0.17.0
-cd archive/panda_py_1.0.0_libfranka_0.17.0/
-pip install panda_python-*libfranka.0.17.0-cp310*.whl
+./bin/build.sh 0.20.3
+cd archive/panda_py_1.0.0_libfranka_0.20.3/
+pip install panda_python-*libfranka.0.20.3-cp310*.whl
 ```
-to install the binary wheel for libfranka 0.17.0 and Python 3.10.
+to install the binary wheel for libfranka 0.20.3 and Python 3.10.
 
 | Robot System Version | libfranka Version of panda-py |
 | ---- | ---- |
+| >= 5.9.0 | [panda_py_1.0.0_libfranka_0.20.3.zip](https://github.com/JeanElsner/panda-py/releases/download/v1.0.0/panda_py_1.0.0_libfranka_0.20.3.zip) |
+| >= 5.8.0 | [panda_py_1.0.0_libfranka_0.17.0.zip](https://github.com/JeanElsner/panda-py/releases/download/v1.0.0/panda_py_1.0.0_libfranka_0.17.0.zip) |
 | >= 5.7.2 | [panda_py_1.0.0_libfranka_0.15.0.zip](https://github.com/JeanElsner/panda-py/releases/download/v1.0.0/panda_py_1.0.0_libfranka_0.15.0.zip) |
 | >= 5.7.0 | [panda_py_1.0.0_libfranka_0.14.2.zip](https://github.com/JeanElsner/panda-py/releases/download/v1.0.0/panda_py_1.0.0_libfranka_0.14.2.zip) |
 | >= 5.5.0 | [panda_py_1.0.0_libfranka_0.13.6.zip](https://github.com/JeanElsner/panda-py/releases/download/v1.0.0/panda_py_1.0.0_libfranka_0.13.6.zip) |
